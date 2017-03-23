@@ -19,7 +19,7 @@ function is_installed() {
 
 
 # Install args software
-function install() {
+function _install() {
     local software_name="$1"
     local command_name="$2"
     local install_cmd="$3"
@@ -36,13 +36,13 @@ function install() {
 
 # Install software
 function install_software(){
-    install 'Homebrew' 'brew' '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
-    install 'Git' 'git' 'brew install git'
-    install 'npm' 'npm' 'brew install npm'
-    install 'graphviz' 'dot' 'brew install graphviz'
-    install 'plantuml' 'plantuml' 'brew install plantuml'
-    install 'calibre(for create pdf, epub)' 'calibre' 'brew install Caskroom/cask/calibre'
-    install 'gitbook-cli' 'gitbook' 'npm install gitbook-cli -g'
+    _install 'Homebrew' 'brew' '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+    _install 'Git' 'git' 'brew install git'
+    _install 'npm' 'npm' 'brew install npm'
+    _install 'graphviz' 'dot' 'brew install graphviz'
+    _install 'plantuml' 'plantuml' 'brew install plantuml'
+    _install 'calibre(for create pdf, epub)' 'calibre' 'brew install Caskroom/cask/calibre'
+    _install 'gitbook-cli' 'gitbook' 'npm install gitbook-cli -g'
 }
 
 
@@ -53,20 +53,21 @@ function install_gitbook_template() {
     wkdir=$(mktemp -d -t "$REPO")
 
     local clone_path="$wkdir/$REPO"
+    local theme_path="$clone_path/template/$theme"
 
     echo "INFO: git clone -b $BRANCH $REPO_PATH..." 
-    git clone --depth 1 -b "$BRANCH $REPO_PATH $clone_path"
+    git clone --depth 1 -b ${BRANCH} ${REPO_PATH} ${clone_path}
 
-    if [ ! -e "$clone_path/$theme" ]; then
+    if [ ! -e "$theme_path" ]; then
         echo "ERROR: theme($theme) is not found"
-        echo "--> Please specify a name that exists in $REPO_PATH/tree/$BRANCH/template/"
+        echo "--> Please specify a name that exists in ${REPO_PATH%.*}/tree/$BRANCH/template/"
         rm -rf "$wkdir"
         exit 1
     fi
 
-    mv "$clone_path/template/$theme" $TMPNAME
+    mv "$theme_path" "$TMPNAME"
     rm -rf "$wkdir"
-    cd $TMPNAME
+    cd "$TMPNAME"
     git init
 
     echo "INFO: Install gitbook modules..."
