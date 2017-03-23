@@ -1,0 +1,137 @@
+#!/bin/bash
+#########################################################################################################
+# Installation shell for gitbook-template
+# See also: https://github.com/humangas/gitbook-template
+#########################################################################################################
+REPO='gitbook-template'
+REPO_PATH="https://github.com/humangas/$REPO.git"
+BRANCH='master'
+TMPNAME='your_book'
+FORCE_INSTALL=0
+
+
+# Is Installed $1 software 
+function is_installed() {
+    [ $FORCE_INSTALL -eq 1 ] && return 1
+    which "$1" > /dev/null 2>&1
+    return $?
+}
+
+
+# Install args software
+function install() {
+    local software_name="$1"
+    local command_name="$2"
+    local install_cmd="$3"
+
+    echo "INFO: Install $software_name..."
+    is_installed "$command_name"
+    if [ $? -ne 0 ]; then
+        eval "$install_cmd"
+    else
+        echo "--> $software_name already installed."
+    fi
+}
+
+
+# Install software
+function install_software(){
+    install 'Homebrew' 'brew' '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+    install 'Git' 'git' 'brew install git'
+    install 'npm' 'npm' 'brew install npm'
+    install 'graphviz' 'dot' 'brew install graphviz'
+    install 'plantuml' 'plantuml' 'brew install plantuml'
+    install 'calibre(for create pdf, epub)' 'calibre' 'brew install Caskroom/cask/calibre'
+    install 'gitbook-cli' 'gitbook' 'npm install gitbook-cli -g'
+}
+
+
+# Install gitbook-template
+function install_gitbook_template() {
+    local theme="$1"
+    echo "INFO: Install gitbook template($theme)..."
+    wkdir=$(mktemp -d -t "$REPO")
+
+    local clone_path="$wkdir/$REPO"
+
+    echo "INFO: git clone -b $BRANCH $REPO_PATH..." 
+    git clone --depth 1 -b "$BRANCH $REPO_PATH $clone_path"
+
+    if [ ! -e "$clone_path/$theme" ]; then
+        echo "ERROR: theme($theme) is not found"
+        echo "--> Please specify a name that exists in $REPO_PATH/tree/$BRANCH/template/"
+        rm -rf "$wkdir"
+        exit 1
+    fi
+
+    mv "$clone_path/template/$theme" $TMPNAME
+    rm -rf "$wkdir"
+    cd $TMPNAME
+    git init
+
+    echo "INFO: Install gitbook modules..."
+    gitbook install
+}
+
+
+# Check already installed book
+function check_already_installed_book() {
+    if [ -e "$TMPNAME" ]; then
+        echo "WARNING: $TMPNAME already exists. Delete it and continue it anyway? [Y/n]"
+        read answer
+        case $answer in
+            'Y' ) 
+                rm -rf $TMPNAME
+                ;;
+            *   ) 
+                echo "ERROR: Processing was interrupted."
+                exit 1
+                ;;
+        esac
+    fi
+}
+
+
+# Main
+function main() {
+    local theme=''
+    for opt in "$@"; do
+        case $opt in
+            '--theme' )
+                theme="$2"
+                shift 2
+                ;;
+            '-U' )
+                FORCE_INSTALL=1
+                ;;
+        esac
+        shift
+    done
+    theme=${theme:-default}
+
+    check_already_installed_book
+    install_software
+    install_gitbook_template "$theme"
+    echo 'INFO: Install Completion.' 
+
+    echo ""
+    echo "Usage:"
+    echo "  $ mv ${TMPNAME} {your book name}"
+    echo "  $ cd {your book name}" 
+    echo "  $ gitbook serve --open"
+    echo ""
+    echo "To make it easier... See Makefile"
+}
+
+
+# trap
+function signal_handler() {
+    echo "ERROR: Catch signal: SIGHUP, SIGINT, SIGQUIT, SIGTERM"
+    [ ! -z "$wkdir" ] && rm -rf "$wkdir"
+    exit 1
+}
+trap 'signal_handler'  1 2 3 15
+
+
+# main
+main "$@"
