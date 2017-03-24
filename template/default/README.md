@@ -1,21 +1,3 @@
 # Gitbook Templates
-<!-- toc -->
-
-GitBook Template
-
-
-## Installation
-
-```
-$ curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/install | bash
-$ curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/install --theme default | bash
-
-# Force Updte depecies software
-$ curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/install --theme default -U | bash
-```
-
-
-
-## Usage
-
+This file file serves as your book's preface, a great place to describe your book's content and ideas.
 
