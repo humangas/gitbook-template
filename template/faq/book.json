@@ -1,0 +1,23 @@
+{
+    "gitbook": ">=2.3.0",
+    "plugins": [
+        "theme-faq",
+        "-lunr",
+        "search-languages",
+        "graph",
+        "mermaid-gb3",
+        "uml",
+        "toc"
+    ],
+    "pluginsConfig": {
+        "searchLanguages": {
+            "lang": "jp"
+        },
+        "mermaid-compat": {
+            "theme": "forest"
+        },
+        "uml": {
+            "format": "png"
+        }
+    }
+}
