@@ -78,17 +78,8 @@ function install_gitbook_template() {
 # Check already installed book
 function check_already_installed_book() {
     if [ -e "$TMPNAME" ]; then
-        echo "WARNING: $TMPNAME already exists. Delete it and continue it anyway? [Y/n]"
-        read answer
-        case $answer in
-            'Y' ) 
-                rm -rf $TMPNAME
-                ;;
-            *   ) 
-                echo "ERROR: Processing was interrupted."
-                exit 1
-                ;;
-        esac
+        echo "ERROR: $TMPNAME already exists. Please delete it or rename it and try again."
+        exit 1
     fi
 }
 
@@ -117,8 +108,8 @@ function main() {
 
     echo ""
     echo "Usage:"
-    echo "  $ mv ${TMPNAME} {your book name}"
-    echo "  $ cd {your book name}" 
+    echo "  $ mv ${TMPNAME} {{ your book name }}"
+    echo "  $ cd {{ your book name }}" 
     echo "  $ gitbook serve --open"
     echo ""
     echo "To make it easier... See Makefile"
