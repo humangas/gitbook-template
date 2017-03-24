@@ -1,0 +1,38 @@
+{
+    "gitbook": ">=2.3.0",
+    "plugins": [
+        "theme-api",
+        "-lunr",
+        "search-languages",
+        "graph",
+        "mermaid-gb3",
+        "uml",
+        "toc"
+    ],
+    "pluginsConfig": {
+        "theme-api": {
+            "theme": "dark",
+            "split": true, 
+            "languages": [
+                {
+          "        lang": "js",
+          "        name": "JavaScript",
+          "        default": true
+                },
+                {
+          "        lang": "go",
+          "        name": "Go"
+                }
+            ]
+        },
+        "searchLanguages": {
+            "lang": "jp"
+        },
+        "mermaid-compat": {
+            "theme": "forest"
+        },
+        "uml": {
+            "format": "png"
+        }
+    }
+}
