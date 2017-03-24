@@ -10,16 +10,16 @@ $ curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/ins
 You can select the theme under [template](https://github.com/humangas/gitbook-template/tree/master/template) directory.
 
 ```
-$ curl -L "https://raw.githubusercontent.com/humangas/gitbook-template/master/install --theme faq" | bash
-$ curl -L "https://raw.githubusercontent.com/humangas/gitbook-template/master/install --theme api" | bash
+$ export THEME=api && curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/install | bash
+$ export THEME=faq && curl -L https://raw.githubusercontent.com/humangas/gitbook-template/master/install | bash
 ...
 ```
 
-### Install and Force Update depecies software
-With the -U option, you can force update the dependent software (if it is not installed, it will be installed).
+### Force Update depecies software
+With the UPDATE option, you can force update the dependent software (if it is not installed, it will be installed).
 
 ```
-$ curl -L "https://raw.githubusercontent.com/humangas/gitbook-template/master/install -U" | bash
+$ export UPDATE=1 && curl -L "https://raw.githubusercontent.com/humangas/gitbook-template/master/install -U" | bash
 ```
 
 
