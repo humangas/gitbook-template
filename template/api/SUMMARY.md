@@ -7,4 +7,4 @@
     - [graph](assets/graph.md)
 
 ## Methods
-- [Defining Methods](methods.md)
+- [Defining Methods](assets/methods.md)
