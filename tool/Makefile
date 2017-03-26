@@ -25,7 +25,7 @@ install:
 	@echo ""
 	
 list:
-	@/bin/bash make/list
+	@/bin/bash make/list | iconv -f UTF-8-MAC -t UTF-8
 
 build:
 	@gitbook build
