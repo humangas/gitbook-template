@@ -65,8 +65,21 @@ function install_gitbook_template() {
         exit 1
     fi
 
+    init_your_book "$clone_path" "$theme_path"
+}
+
+
+# Init your_book
+function init_your_book() {
+    local clone_path="$1"
+    local theme_path="$2"
+
     mv "$theme_path" "$TMPNAME"
+    mv "$clone_path/tool/Makefile" "$TMPNAME/" 
+    mv "$clone_path/tool/make" "$TMPNAME/" 
+
     rm -rf "$wkdir"
+
     cd "$TMPNAME"
     git init
 
@@ -97,7 +110,7 @@ function main() {
     echo ""
     echo "Usage:"
     echo "  $ mv ${TMPNAME} {{ your book name }}"
-    echo "  $ cd {{ your book name }}" 
+    echo '  $ cd $_'
     echo "  $ gitbook serve --open"
     echo ""
     echo "To make it easier... See Makefile"

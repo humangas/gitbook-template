@@ -1,37 +1,49 @@
 all:
+	@echo "You can use gitbook-template more easily with the following command."
+	@echo ""
 	@echo "Usage:"
-	@echo "- setup:  Initialize git"
-	@echo "- build:  Update SUMMARY.md with gitbook build"
-	@echo "- deploy: Deploy to server"
-	@echo "- serve:  Show contents on Local Server"
+	@echo "- install:  Install convenient software and initialize git"
+	@echo "- list:     Show asstes contents list in markdown link format"
+	@echo "- build:    Build contents to docs diretory with gitbook build"
+	@echo "- deploy:   Deploy to git server"
+	@echo "- serve:    Show contents on Local Server"
 
-setup:
+help:
+	@make all
+
+install:
+	@brew install direnv
+	@brew install go
+	@go get github.com/mattn/memo
+	@\cp -f make/envrc .envrc
+	@direnv allow
 	@git init
-	@echo "Run: $ git remote add origin {{ your git repositor url }}"
+	@echo ""
+	@echo "-> Setup direnv. See also: https://github.com/direnv/direnv#setup"
+	@echo "-> Run: $ git remote add origin {{ your git repositor url }}"
+	@echo "-> Usage mattn/memo See also: https://github.com/mattn/memo"
+	@echo ""
+	
+list:
+	@/bin/bash make/list
 
 build:
-	@mkdir -p build
-	@python tools/build.py
 	@gitbook build
 	@rm -rf docs
-	@rm -rf _book/docs
-	@rm -rf _book/asstes
-	@rm -rf _book/tools
-	@rm -rf _book/Makefile
-	@rm -rf _book/.gitignore
-	@rm -rf _book/.gitkeep
-	@mv _book docs
+	@mkdir docs
+	@cp -f _book/index.html docs/
+	@cp -f _book/search_index.json docs/
+	@cp -fr _book/gitbook docs/
+	@cp -fr _book/assets docs/
+	@rm -rf docs/assets/*.md
 
 deploy:
 	@make build
-	@rm -rf build
 	@git add -A
 	@git commit -m 'Updated contents'
 	@git push origin master
 
 serve:
-	@mkdir -p build
-	@python tools/build.py
 	@gitbook serve --open
 
-.PHONY: all setup build deploy serve
+.PHONY: all help install list build deploy serve

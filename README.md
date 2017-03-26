@@ -1,5 +1,5 @@
 # gitbook-template
-Easy setup of gitbook template (defualt, faq, api with include some plugins) .
+Easy setup of [GitBook](https://www.gitbook.com) template (defualt, faq, api with include some plugins).
 
 ## Installation (for Mac)
 ```
@@ -28,11 +28,11 @@ After installing, please execute the following.
 
 ```
 $ mv your_book {{ your book name }}
-$ cd {{ your book name }}
+$ cd $_
 $ gitbook serve --open
 ```
 
-To make it easier... See Makefile
+You can use gitbook-template more easily. Run: $ make help
 
 ## Install Software
 Refer to the following for installed software.
