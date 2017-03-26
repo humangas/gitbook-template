@@ -1,5 +1,6 @@
 .DS_Store
 *.bak
+.envrc
 
 # uml outputs
 assets/images/uml/*.png
