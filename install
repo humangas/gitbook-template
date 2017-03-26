@@ -74,13 +74,12 @@ function init_your_book() {
     local clone_path="$1"
     local theme_path="$2"
 
-    mv "$theme_path" "$TMPNAME"
-    mv "$clone_path/tool/Makefile" "$TMPNAME/" 
-    mv "$clone_path/tool/make" "$TMPNAME/" 
+    mv -v ${theme_path} ${TMPNAME}
+    mv -v ${clone_path}/tool/* ${TMPNAME}/
 
-    rm -rf "$wkdir"
+    rm -rf ${wkdir}
 
-    cd "$TMPNAME"
+    cd ${TMPNAME}
     git init
 
     echo "INFO: Install gitbook modules..."
