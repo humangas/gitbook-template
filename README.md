@@ -34,10 +34,12 @@ $ gitbook serve --open
 
 You can use gitbook-template more easily. Run: $ make help
 
+
 ## Install Software
 Refer to the following for installed software.
 
 - [software](https://github.com/humangas/gitbook-template/blob/master/install#L37)
+
 
 ## Include Gitbook Plugins
 It mainly includes the following plugins.
