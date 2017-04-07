@@ -1,4 +1,9 @@
+.DEFAULT_GOAL := help
+.PHONY: all help install list build deploy serve
+
 all:
+
+help:
 	@echo "You can use gitbook-template more easily with the following command."
 	@echo ""
 	@echo "Usage:"
@@ -7,9 +12,6 @@ all:
 	@echo "- build:    Build contents to docs diretory with gitbook build"
 	@echo "- deploy:   Deploy to git server"
 	@echo "- serve:    Show contents on Local Server"
-
-help:
-	@make all
 
 install:
 	@brew install direnv
@@ -45,5 +47,3 @@ deploy:
 
 serve:
 	@gitbook serve --open
-
-.PHONY: all help install list build deploy serve
