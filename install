@@ -50,7 +50,7 @@ function install_software(){
 function install_gitbook_template() {
     local theme="$1"
     echo "INFO: Install gitbook template($theme)..."
-    wkdir=$(mktemp -d -t "$REPO")
+    wkdir=$(mktemp -d -t "$REPO.XXXXXX")
 
     local clone_path="$wkdir/$REPO"
     local theme_path="$clone_path/template/$theme"
